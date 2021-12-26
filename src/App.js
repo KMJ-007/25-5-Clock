@@ -5,8 +5,8 @@ import audio from './beep.mp3';
 const sound = document.getElementById("beep");
 
 const playBreaksound = () => {
-    var breakAudio = new Audio(sound);
     var breakAudio = new Audio(audio);
+
     // console.log(breakAudio.currentTime)
     breakAudio.currentTime = 0;
     breakAudio.play();
@@ -84,25 +84,24 @@ export default class App extends Component {
                     const { timeLeft,timerType,breakLength,sessionLength} = this.state;
                     //if timer reaches zero then it should swap the label and play the sound
                     if (timeLeft === 0) {
-                        playBreaksound();
                         this.setState({
                             timerType: (timerType === "Session") ? "Break" : "Session",
                             timeLeft: (timerType === "Session") ?
                                 (this.state.breakLength * 60) : (this.state.sessionLength * 60)
                         });
 
-                        
+                        playBreaksound();
 
                     } 
                     //if nothing above is true than it should continue to decrease 
                     else {
                         this.setState({
-                            timeLeft: (timeLeft - 1)
+                            timeLeft: (this.state.timeLeft - 1)
                         });
                     }
 
                 }
-                    , 0)
+                    , 1000)
             });
         }
     }
@@ -184,7 +183,7 @@ export default class App extends Component {
                     <button id="start_stop"
                         onClick={this.startStop}>
                         start/stop
-                        </button>
+                    </button>
                     <button id="reset"
                         onClick={this.reset}>
                         reset
