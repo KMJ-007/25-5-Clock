@@ -1,16 +1,9 @@
 import React, { Component } from "react";
-import audio from './beep.mp3';
+// import audio from './beep.mp3';
 
 //this is for test only
 const sound = document.getElementById("beep");
 
-const playBreaksound = () => {
-    var breakAudio = new Audio(audio);
-
-    // console.log(breakAudio.currentTime)
-    breakAudio.currentTime = 0;
-    breakAudio.play();
-};
 
 export default class App extends Component {
     constructor(props) {
@@ -81,16 +74,17 @@ export default class App extends Component {
                 timerState: "Running",
                 temp: setInterval(() => {
                     //for not typing this.state
-                    const { timeLeft,timerType,breakLength,sessionLength} = this.state;
+                    // const { timeLeft,timerType,breakLength,sessionLength} = this.state;
                     //if timer reaches zero then it should swap the label and play the sound
-                    if (timeLeft === 0) {
+                    if (this.state.timeLeft === 0) {
                         this.setState({
-                            timerType: (timerType === "Session") ? "Break" : "Session",
-                            timeLeft: (timerType === "Session") ?
+                            timerType: (this.state.timerType === "Session") ? "Break" : "Session",
+                            timeLeft: (this.state.timerType === "Session") ?
                                 (this.state.breakLength * 60) : (this.state.sessionLength * 60)
                         });
 
-                        playBreaksound();
+                        sound.currentTime = 0;   
+                        sound.play();
 
                     } 
                     //if nothing above is true than it should continue to decrease 
